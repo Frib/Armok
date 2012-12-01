@@ -74,7 +74,8 @@ HELL
 -------
 
 When we look at the bare basics, this is how you write 'Hello world!':
-+>>mwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmm<w>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmmmmmmm<<w>>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmmmmmmmmmmmmmmmmmmm<<<w>>>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm<<<<w<<<
+
+	+>>mwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmm<w>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmmmmmmm<<w>>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmmmmmmmmmmmmmmmmmmm<<<w>>>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm<<<<w<<<
 
 Actually, I'm lying. That's not 'Hello World!', that's 'HELL'. And your dwarf will then promptly walk into magma and die.
 Truth be told, I got bored after that second L, because rocks are a limited resource per tile. And I can't show the fancy stuff yet.
@@ -90,7 +91,8 @@ Copycat
 -------
 
 So let's cheat a little. Let's create Hello World!, but this time we use the trader to supply the letters.
-+>>mwwwwwwwwwwwwwwwwwwwwwwwww<<<
+
+	+>>mwwwwwwwwwwwwwwwwwwwwwwwww<<<
 
 This time, we create a dwarf, move him to the right twice, and then we mine once.
 We then create the trading depot. After that, we work for another 24 turns. So what does this do?
@@ -105,7 +107,8 @@ The Manager
 -------
 
 Let's write a program that takes input of any length, and outputs that again.
-+>>mwmm<w>mmdd<w->ww<w
+
+	+>>mwmm<w>mmdd<w->ww<w
 
 It's even shorter than the one above! So what's happening here?
 The dwarf first creates a trader, and then creates a manager's office to the left of that. 
@@ -121,7 +124,8 @@ Fun
 -------
 
 Let's kill 5 dwarves in 5 different ways!
-++<+w+>>>+>>mww
+
+	++<+w+>>>+>>mww
 
 The first dwarf has no instructions. So he turns melancholic and dies.
 The second dwarf moves left and walks into magma.
