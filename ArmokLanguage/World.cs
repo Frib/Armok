@@ -57,12 +57,17 @@ namespace ArmokLanguage
             {
                 case 1: Cave[dwarf.Position].Workshop = new Trader(); break;
                 case 2: Cave[dwarf.Position].Workshop = new ManagerOffice(); break;
+                case 3: Cave[dwarf.Position].Workshop = new Appraiser(); break;
                 default: Trace.WriteLine(dwarf.Name + " failed to create a workshop with " + dwarf.Rocks + " rocks and went stark raving mad!"); dwarf.Dead = true; return;
             }
 
             dwarf.Rocks = 0;
         }
-        
-        public string Output { get { return sb.ToString(); } }
+
+        public string OutputInText { get { return sb.ToString(); } }
+
+        public List<int> OutputInNumbers { get { return sb.ToString().ToArray().Select(c => (int)c).ToList(); } }
+
+        public string Output { get { return OutputInText + " (" + OutputInNumbers.Select(i => i.ToString()).Aggregate((x, y) => x + " " + y) + ")"; } }
     }
 }

@@ -44,4 +44,16 @@ namespace ArmokLanguage
             }
         }
     }
+
+    public class Appraiser : Workshop
+    {
+        public override void Execute(Dwarf d, World w)
+        {
+            int rocks = w.Cave[d.Position].Rocks;
+            if (d.Rocks > rocks)
+            {
+                new Dump().Execute(d, w);
+            }
+        }
+    }
 }

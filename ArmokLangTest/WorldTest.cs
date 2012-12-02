@@ -28,9 +28,7 @@ namespace ArmokLangTest
         [TestMethod]
         public void ShortParse()
         {
-            Language l = new Language();
-            l.ShortParse("+>>m<<d");
-            var world = l.Execute("");
+            var world = Execute("+>>m<<d", "");
             Assert.AreEqual(0, world.Dwarves.First().Rocks);
             Assert.AreEqual(63, world.Cave[4].Rocks);
         }
@@ -38,31 +36,36 @@ namespace ArmokLangTest
         [TestMethod]
         public void OutputTraderTest()
         {
-            string script = "+>>mwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mm<w<<<";
-            Language l = new Language();
-            l.ShortParse(script);
-            var world = l.Execute("");
-            Assert.AreEqual("A", world.Output);
+            var world = Execute("+>>mwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>mm<w<<<", "");
+            Assert.AreEqual("A", world.OutputInText);
         }
 
         [TestMethod]
         public void InputTraderTest()
         {
-            string script = "+>>m<<wwwwwwwwwwwwwwwwwwwwwwwww<";
-            Language l = new Language();
-            l.ShortParse(script);
-            var world = l.Execute("Hello world!");
-            Assert.AreEqual("Hello world!", world.Output);
+            var world = Execute("+>>m<<wwwwwwwwwwwwwwwwwwwwwwwww<", "Hello world!");
+            Assert.AreEqual("Hello world!", world.OutputInText);
         }
 
         [TestMethod]
         public void InfiniteInOutTest()
         {
-            string script = "+>>mwmm<w>mmdd<w->ww<w";
+            var world = Execute("+>>mwmm<w>mmdd<w->ww<w", "Hello world!");
+            Assert.AreEqual("Hello world!", world.OutputInText);
+        }
+
+        [TestMethod]
+        public void BrokerTest()
+        {
+            var world = Execute("+>>mmm<w>mmmdddm<<w>>mmmmmmmm<wwwwwwww<w<<", "");
+            Assert.AreEqual(3, world.OutputInNumbers.FirstOrDefault());
+        }
+
+        private World Execute(string script, string input)
+        {
             Language l = new Language();
             l.ShortParse(script);
-            var world = l.Execute("Hello world!");
-            Assert.AreEqual("Hello world!", world.Output);
+            return l.Execute(input);
         }
     }
 }
