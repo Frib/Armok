@@ -42,6 +42,10 @@ namespace ArmokLanguage
                 List<Instruction> toInsert = w.Routines[rocks.ToString()];
                 d.Instructions.InsertRange(0, toInsert);
             }
+            else
+            {
+                w.Cave[d.Position].Workshop = null;
+            }
         }
     }
 

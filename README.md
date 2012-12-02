@@ -5,6 +5,23 @@ This is a programming language made by Armok himself. Well, not really. However,
 With this language, you can program your dwarves to do tasks. There are 5 tasks in total.
 It is up to you to manage your dwarves (yes! plural! Multitasking!) and create the ultimate fortress that does arithmetic and other fancy stuff.
 
+'Hello World!' can be written as followed:
+
+	->mmwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>d<d<
+	->w<
+	-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd>w<
+	+>>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmddddd
+		ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd>mm<w>mmmdddm
+		mwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>d<
+		<wwwwwwwwwwwwwwwwwwddddddddddddddddddddddddddddddddddddddddddddddddddddd
+		ddddddd<mmm>wddw<<mmm>>>>ddd<ww<<<mmmmmmmm>>w>www<<<mmmmm>>w>www<<<mmmmm
+		mmmmmmm>>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmm>>w>w<w>ww<<<mmmmm
+		mmmmmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmmmmm>
+		>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmm>>w>w<<<m>>w<<<
+	-<<<mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>>>
+	
+For more code examples and an explanation of what is happening here, see the lower half of this readme.
+
 The world
 -------
 
@@ -44,9 +61,10 @@ Currently, there are two workshops implemented, but this number will increase as
 Workshops are built with the work command if a tile doesn't contain one. Workshops are then worked by using the work command while on one.
 
 1. Trader. This is your input/output. If you dwarf is carrying rocks and he works at a trader, he will output them as a character. If your dwarf is not carrying rocks and he works, then he takes the next character from the input. If there is no further input, the traders will murder him.
-2. Manager's office. This is your manager! Dwarves that issue a work instruction on a manager's office will start a subroutine. Which subroutine depends on the amount of rocks dumped on the office. So if there are 2 rocks on it, instruction set #2 will be assinged to the dwarf.
+2. Manager's office. This is your manager! Dwarves that issue a work instruction on a manager's office will start a subroutine. Which subroutine depends on the amount of rocks dumped on the office. So if there are 2 rocks on it, instruction set #2 will be assinged to the dwarf. Working at a manager with 0 rocks will destroy the office.
+3. Appraiser. In this office, your dwarves will compare their rocks to the rocks on the ground here. If they are carrying more, they will dump one to the tile on the left. If they are carrying the same amount or less, nothing happens. 
 
-More is yet to come. Some comparison stuff at least, and a way for dwarves to interact with each other for more parallel goodness. Speaking of which...
+More is yet to come, such as a way for dwarves to interact with each other for more parallel goodness. Speaking of which...
 
 Parallellism
 -------
@@ -132,6 +150,60 @@ The second dwarf moves left and walks into magma.
 The third dwarf tries to create a workshop, but he has no rock, so he goes stark raving mad.
 The fourth dwarf runs head-long into a wall and dies.
 The fifth dwarf goes to the wall, mines a rock, builds a trader, then trades. But if there's no input, the traders murder him.
+
+Infinite mining and hauling to a specific tile
+------
+
+Since each cave wall contains 64 rocks, we need to keep mining if we want more to work with.
+But we also want a single source tile of rock. How can we achieve this? With managers!
+
+	->mmwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>d<d<
+	->w<
+	-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd>w<w
+	+>>mm<w>mmmdddmmwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>d<<w
+
+This code will create a dwarf that will mine indefinitely and dump it all on tile 1. So what's going on here?
+You'll notice that the subroutines are defined before the dwarf. This is to save rocks. 
+Even though we're going to mine an infinite amount of them, we don't want to waste any if we can help it.
+
+What we need is the following:
+* A drop point
+* A (moving) mining point
+* A path between those two.
+
+That's exactly what those 3 subroutines are. 
+The first is the mining point. It will mine and create a new manager with the mining subroutine for next time. It will then drop a rock on the mining manager before, turning it into a path manager, extending the chain
+The second is the path in between. Move right, work at the next, then move left. Chained together, these will make a dwarf move on and on until he finds something else to do.
+The third is the drop point. Dump all your rock, then move right (to either a mining point or a path towards one), work, move left, and work here again to keep things infinite.
+In order to remove infinity from this, simply remove the last work order from the drop subroutine and add manual work tasks to the dwarf itself.
+
+The dwarf itself will set things up to drop everything at position 1. When he's done, he'll have created two workshops. One for dropping, one for mining.
+
+A big drawback from this is that the entire pathway will be filled with manager offices. 
+
+True Hello World!
+-------
+
+With the knowledge we have right now, it's possible to create an actual 'Hello World!' program!
+For it we'll need 1031 rocks for the output. We'll need a few more for various things. If we do the mining routine 20 times, we should have enough rocks to work with.
+
+	->mmwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>d<d<
+	->w<
+	-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd>w<
+	+>>mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd>mm<w>mmmdddmmwmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>d<<wwwwwwwwwwwwwwwwwwdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd<mmm>wddw<<mmm>>>>ddd<ww<<<mmmmmmmm>>w>www<<<mmmmm>>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmm>>w>w<w>ww<<<mmmmmmmmmmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmm>>w>w<<<m>>w<<<
+	-<<<mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm>>>
+	
+Lots of things happening here right now. First of all, we're going to mine roughly 1200 rocks. Because we can. They will all be dumped on tile #2.
+The first half of the dwarf's code is just that. Once that's done, we'll do the following:
+
+	<mmm>wddw<<mmm>>>>ddd<ww<<<mmmmmmmm>>w>www<<<mmmmm>>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmm>>w>w<w>ww<<<mmmmmmmmmmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmmmmmmmm>>w>www<<<mmmmmmmmmmmm>>w>www<<<mmmm>>w>w<<<m>>w<<<
+	
+This part will remove the manager's office and replace it with a trader. Then we'll add rocks to the manager next to it, so it points to routine #5.
+Routine #5 basically means 'pick up 32 rocks from the rock stockpile we have'. We want 32, because capitals 'start' at the 64 range, and normal letters at the 96 range. The remainder of the dwarf's code is to gather additional rocks in order to form the letters, then trade.
+
+Finally, we end up with 'Hello World!' :D
+And it only takes 4600 turns. We can probably shave off a bunch of wasted time on movement by swapping the trader and the manager, mining a few rocks less, etc.
+But I think the main turn advantage will be in parallellism. But that's for later!
 
 The future
 -------
