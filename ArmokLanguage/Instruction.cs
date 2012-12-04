@@ -29,11 +29,14 @@ namespace ArmokLanguage
     {
         public override bool Execute(Dwarf dwarf, World world)
         {
-            if (world.Cave[dwarf.Position + 1].Rocks != -1)
+            var tile = world.Cave[dwarf.Position + 1];
+
+            if (tile.Rocks != -1)
             {
                 dwarf.Position += 1;
                 return true;
             }
+
             Trace.WriteLine(dwarf.Name + " ran into a wall and perished");
             return false;
         }
@@ -44,17 +47,21 @@ namespace ArmokLanguage
         public override bool Execute(Dwarf dwarf, World world)
         {
             int placeToMine = dwarf.Position + 1;
+            var tile = world.Cave[placeToMine];
 
-            if (world.Cave[placeToMine].Rocks != 0)
+            lock (tile.rockLock)
             {
-                if (world.Cave[placeToMine].Rocks == -1)
+                if (world.Cave[placeToMine].Rocks != 0)
                 {
-                    world.Cave[placeToMine].Rocks = 64;
-                    world.Cave.Add(new Tile(){ Rocks= -1});
-                }
+                    if (world.Cave[placeToMine].Rocks == -1)
+                    {
+                        world.Cave[placeToMine].Rocks = 64;
+                        world.Cave.Add(new Tile() { Rocks = -1 });
+                    }
 
-                world.Cave[placeToMine].Rocks -= 1;
-                dwarf.Rocks += 1;
+                    world.Cave[placeToMine].Rocks -= 1;
+                    dwarf.Rocks += 1;
+                }
             }
 
             return true;
@@ -70,7 +77,10 @@ namespace ArmokLanguage
                 int placeToDrop = dwarf.Position - 1;
                 if (placeToDrop > 0)
                 {
-                    world.Cave[placeToDrop].Rocks += 1;
+                    lock (world.Cave[placeToDrop].rockLock)
+                    {
+                        world.Cave[placeToDrop].Rocks += 1;
+                    }
                 }
                 dwarf.Rocks -= 1;
             }
@@ -83,15 +93,17 @@ namespace ArmokLanguage
     {
         public override bool Execute(Dwarf dwarf, World world)
         {
-            if (world.Cave[dwarf.Position].Workshop == null)
+            lock (world.Cave[dwarf.Position].workLock)
             {
-                world.CreateWorkshop(dwarf);
+                if (world.Cave[dwarf.Position].Workshop == null)
+                {
+                    world.CreateWorkshop(dwarf);
+                }
+                else
+                {
+                    world.Cave[dwarf.Position].Workshop.Execute(dwarf, world);
+                }
             }
-            else
-            {
-                world.Cave[dwarf.Position].Workshop.Execute(dwarf, world);
-            }
-
             return true;
         }
     }

@@ -28,6 +28,11 @@ namespace ArmokLanguage
             InitializeComponent();
             Trace.Listeners.Add(TraceListener);
             uristinfo.SetBinding(TextBox.TextProperty, new Binding("Trace") { Source = TraceListener });
+
+            comboBox1.Items.Add(ParallelType.Sequential);
+            comboBox1.Items.Add(ParallelType.ParallelLockstep);
+            comboBox1.Items.Add(ParallelType.ParallelFree);
+            comboBox1.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -36,7 +41,7 @@ namespace ArmokLanguage
             try
             {
                 p.ShortParse(program.Text);
-                Trace.WriteLine(p.Execute(input.Text).Output);
+                Trace.WriteLine(p.Execute(input.Text, (ParallelType)comboBox1.SelectedItem).Output);
                 
             }
             catch (Exception ex)

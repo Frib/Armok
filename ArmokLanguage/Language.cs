@@ -72,11 +72,11 @@ namespace ArmokLanguage
             routines.Add(name, new List<Instruction>());
         }
 
-        public World Execute(string consoleInput)
+        public World Execute(string consoleInput, ParallelType pType = ParallelType.Sequential)
         {
             World world = new World(dwarves, routines);
 
-            world.Run(consoleInput);
+            world.Run(consoleInput, pType);
 
             return world;
         }

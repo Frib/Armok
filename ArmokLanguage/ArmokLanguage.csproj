@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Dwarf.cs" />
     <Compile Include="Instruction.cs" />
+    <Compile Include="ParallelType.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TraceListener.cs" />
     <Compile Include="Workshop.cs" />
