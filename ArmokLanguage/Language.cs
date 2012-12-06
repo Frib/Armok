@@ -80,5 +80,23 @@ namespace ArmokLanguage
 
             return world;
         }
+
+        public World Debug(ParallelType pType = ParallelType.Sequential)
+        {
+            World world = new World(dwarves, routines);
+
+            return world;
+        }
+
+        public static void Main (string[] args)
+        {
+            var language = new Language();
+            var code = args.Any() ? args.Aggregate((x, y) => x + y) : Console.ReadLine();
+            while (true)
+            {
+                language.ShortParse(code);
+                Console.WriteLine(language.Execute(Console.ReadLine()).Output);
+            }
+        }
     }
 }

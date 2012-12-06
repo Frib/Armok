@@ -23,6 +23,11 @@ namespace ArmokLanguage
             }
             return true;
         }
+
+        public override string ToString()
+        {
+            return "<";    
+        }
     }
 
     public class MoveRight : Instruction
@@ -39,6 +44,11 @@ namespace ArmokLanguage
 
             Trace.WriteLine(dwarf.Name + " ran into a wall and perished");
             return false;
+        }
+
+        public override string ToString()
+        {
+            return ">";
         }
     }
 
@@ -66,6 +76,11 @@ namespace ArmokLanguage
 
             return true;
         }
+
+        public override string ToString()
+        {
+            return "m";
+        }
     }
 
     public class Dump : Instruction
@@ -87,6 +102,11 @@ namespace ArmokLanguage
 
             return true;
         }
+
+        public override string ToString()
+        {
+            return "d";
+        }
     }
 
     public class Work : Instruction
@@ -105,6 +125,11 @@ namespace ArmokLanguage
                 }
             }
             return true;
+        }
+
+        public override string ToString()
+        {
+            return "w";
         }
     }
 }

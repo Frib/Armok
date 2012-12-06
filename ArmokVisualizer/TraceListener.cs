@@ -5,7 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using System.ComponentModel;
 
-namespace ArmokLanguage
+namespace ArmokVisualizer
 {
     public class MyTraceListener : TraceListener, INotifyPropertyChanged
     {

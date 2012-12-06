@@ -57,7 +57,7 @@ But what that means is, that if you create a dwarf, it will have subroutine numb
 Workshops
 -------
 
-Currently, there are two workshops implemented, but this number will increase as Armok is further developed. 
+Currently, there are three workshops implemented, but this number will increase as Armok is further developed. 
 Workshops are built with the work command if a tile doesn't contain one. Workshops are then worked by using the work command while on one.
 
 1. Trader. This is your input/output. If you dwarf is carrying rocks and he works at a trader, he will output them as a character. If your dwarf is not carrying rocks and he works, then he takes the next character from the input. If there is no further input, the traders will murder him.
@@ -204,6 +204,28 @@ Routine #5 basically means 'pick up 32 rocks from the rock stockpile we have'. W
 Finally, we end up with 'Hello World!' :D
 And it only takes 4600 turns. We can probably shave off a bunch of wasted time on movement by swapping the trader and the manager, mining a few rocks less, etc.
 But I think the main turn advantage will be in parallellism. But that's for later!
+
+Visualizer
+=======
+
+The source code now has its user interface separated from the language itself. Sort of. It is theoretically possible to just build the language and run that from console with your code as input. It will then ask you for your text input and run it with that.
+However, if you are a filthy elf like me, you'd prefer the use of a fancy visualizer. Simply start the visualizer program, enter your source code, then hit the debug button. A fancy new window will appear!
+
+In this new window, you can view the state of your world. In the box on the top, the cave is shown. The first line is the index, the second is the rock count, and the third line are if any dorfs or workshops are there.
+TODO: give more info about the dorfs and workshops. And a way to view more detailed cell information.
+
+Then you'll have dwarf information. The box on the left shows all your dwarfs and a quick overview of their state. Select one to view his remaining orders.
+
+After that comes the routine list. Select one to view the details. The number is the one that managers will match their rock count to.
+Finally, you can view the output of your program and some trace information.
+
+Below that are some fancy input buttons.
+First, the lower left label is the turn count.
+The small textbox holds the input for traders. You can change this at any time when it is not actively running.
+The step button makes the fort step once.
+The run button makes it run until all dorfs are dead, or for 10.000 turns.
+The run until button makes it run until a specific condition is met, or until they are all dead or 10k turns have passed.
+The exterminate button exterminates all the dorfs. Handy if you're stuck in an infinite loop.
 
 The future
 -------

@@ -50,5 +50,23 @@ namespace ArmokLanguage
         public bool SkipTurn { get; set; }
 
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            string result = "\"" + Name + "\" ";
+
+            if (Dead)
+            {
+                result += "DEAD ";
+            }
+
+            result += "pos:" + Position + " r:" + Rocks + " ";
+            if (Instructions.Any())
+            {
+                result += Instructions.First().ToString();
+            }
+
+            return result;
+        }
     }
 }

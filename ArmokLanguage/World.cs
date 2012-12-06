@@ -20,6 +20,34 @@ namespace ArmokLanguage
             this.Routines = routines;
             this.Cave = new List<Tile>() { new Tile(), new Tile(), new Tile(), new Tile(), new Tile() { Rocks = -1 } };
             this.Dwarves = dwarves;
+            sb = new StringBuilder();
+        }
+
+        public bool DebugStep(ParallelType pType = ParallelType.Sequential)
+        {
+            switch (pType)
+            {
+                case ParallelType.ParallelFree:
+                case ParallelType.ParallelLockstep:
+                    {
+                        Parallel.ForEach(Dwarves.Where(dorf => !dorf.Dead), d =>
+                        {
+                            d.Turn(this);
+                        });
+                        break;
+                    }
+                case ParallelType.Sequential:
+                default:
+                    {
+                        foreach (var d in Dwarves.Where(dorf => !dorf.Dead))
+                        {
+                            d.Turn(this);
+                        }
+                        break;
+                    }
+            }
+
+            return Dwarves.Any(x => !x.Dead);
         }
 
         public void Run(string consoleInput, ParallelType pType = ParallelType.Sequential)
@@ -102,7 +130,7 @@ namespace ArmokLanguage
             return result;
         }
 
-        private char[] input { get; set; }
+        public char[] input { get; set; }
 
         internal void CreateWorkshop(Dwarf dwarf)
         {
@@ -121,6 +149,6 @@ namespace ArmokLanguage
 
         public List<int> OutputInNumbers { get { return sb.ToString().ToArray().Select(c => (int)c).ToList(); } }
 
-        public string Output { get { return OutputInText + " (" + OutputInNumbers.Select(i => i.ToString()).Aggregate((x, y) => x + " " + y) + ")"; } }
+        public string Output { get { return OutputInText + (OutputInNumbers.Any() ? " (" + OutputInNumbers.Select(i => i.ToString()).Aggregate((x, y) => x + " " + y) + ")" : ""); } }
     }
 }
