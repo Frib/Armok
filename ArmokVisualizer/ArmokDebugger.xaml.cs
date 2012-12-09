@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ArmokLanguage;
 using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace ArmokVisualizer
 {
@@ -37,6 +38,15 @@ namespace ArmokVisualizer
             eventSelection.Items.Add("Trades something");
 
             eventSelection.SelectedIndex = 0;
+
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(dt_Tick);
+            dt.Interval = TimeSpan.FromSeconds(0.1d);
+        }
+
+        void dt_Tick(object sender, EventArgs e)
+        {
+            stepButton_Click(sender, null);
         }
         
         public World World { get; set; }
@@ -95,6 +105,10 @@ namespace ArmokVisualizer
         {
             World.input = this.inputText.Text.ToArray();
             World.DebugStep();
+            if (World.Dwarves.All(x => x.Dead))
+            {
+                dt.Stop();
+            }
             Turn++;
             UpdateView();
         }
@@ -270,6 +284,77 @@ namespace ArmokVisualizer
                 conditionMet |= count >= 10000;
             }
 
+            UpdateView();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            if (dt.IsEnabled)
+            {
+                dt.Stop();
+            }
+            else
+            {
+                dt.Start();
+            }
+        }
+
+        private DispatcherTimer dt;
+
+        private void dwarfOrderSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (dt.IsEnabled || dwarfList.SelectedItem == null)
+            {
+                return;
+            }
+
+            var di = ((Dwarf)dwarfList.SelectedItem).Instructions;
+
+            di.Clear();
+
+            foreach (char c in dwarfText.Text)
+            {
+                var i = ArmokLanguage.Language.ParseChar(c);
+                if (i != null)
+                {
+                    di.Add(i);
+                }
+            }
+        }
+
+        private void routineSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (dt.IsEnabled || managerList.SelectedItem == null)
+            {
+                return;
+            }
+
+            var ml = World.Routines[managerList.SelectedItem.ToString()];
+
+            ml.Clear();
+
+            foreach (char c in managerText.Text)
+            {
+                var i = ArmokLanguage.Language.ParseChar(c);
+                if (i != null)
+                {
+                    ml.Add(i);
+                }
+            }
+        }
+
+        private void dwarfAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var instructions = new List<Instruction>();
+            var name = (World.Routines.Count + 1).ToString();
+            World.Dwarves.Add(new Dwarf(name, instructions));
+            World.Routines.Add(name, new List<Instruction>());
+            UpdateView();
+        }
+
+        private void managerAdd_Click(object sender, RoutedEventArgs e)
+        {
+            World.Routines.Add((World.Routines.Count + 1).ToString(), new List<Instruction>());
             UpdateView();
         }
     }

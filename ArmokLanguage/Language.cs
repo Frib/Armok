@@ -39,25 +39,13 @@ namespace ArmokLanguage
                     currentRoutine = newname;
                     name++;
                 }
-                else if (c == '>')
+                else
                 {
-                    routines[currentRoutine].Add(new MoveRight());
-                }
-                else if (c == '<')
-                {
-                    routines[currentRoutine].Add(new MoveLeft());
-                }
-                else if (c == 'm')
-                {
-                    routines[currentRoutine].Add(new Mine());
-                }
-                else if (c == 'd')
-                {
-                    routines[currentRoutine].Add(new Dump());
-                }
-                else if (c == 'w')
-                {
-                    routines[currentRoutine].Add(new Work());
+                    var order = ParseChar(c);
+                    if (order != null)
+                    {
+                        routines[currentRoutine].Add(order);
+                    }
                 }
             }
 
@@ -65,6 +53,31 @@ namespace ArmokLanguage
             {
                 d.Instructions = d.Instructions.ToList();
             }
+        }
+
+        public static Instruction ParseChar(char c)
+        {
+            if (c == '>')
+            {
+                return new MoveRight();
+            }
+            else if (c == '<')
+            {
+                return new MoveLeft();
+            }
+            else if (c == 'm')
+            {
+                return new Mine();
+            }
+            else if (c == 'd')
+            {
+                return new Dump();
+            }
+            else if (c == 'w')
+            {
+                return new Work();
+            }
+            return null;
         }
 
         private void CreateRoutine(string name)

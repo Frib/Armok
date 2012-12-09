@@ -4,19 +4,24 @@
         Title="ArmokDebugger" Height="800" Width="800">
     <Grid>
         <TextBox Height="120" Margin="12,12,12,0" Name="caveBox" VerticalAlignment="Top" HorizontalScrollBarVisibility="Visible" FontFamily="Lucida Console"/>
-        <ListBox Height="207" HorizontalAlignment="Left" Margin="12,138,0,0" Name="dwarfList" VerticalAlignment="Top" Width="120" SelectionChanged="dwarfList_SelectionChanged" />
-        <TextBox Height="207" HorizontalAlignment="Left" Margin="138,138,0,0" Name="dwarfText" VerticalAlignment="Top" Width="628" TextWrapping="Wrap" />
-        <ListBox Height="186" HorizontalAlignment="Left" Margin="12,351,0,0" Name="managerList" VerticalAlignment="Top" Width="120" SelectionChanged="managerList_SelectionChanged" />
-        <TextBox Height="186" HorizontalAlignment="Left" Margin="138,351,0,0" Name="managerText" VerticalAlignment="Top" Width="628" TextWrapping="Wrap" />
+        <ListBox Height="178" HorizontalAlignment="Left" Margin="12,138,0,0" Name="dwarfList" VerticalAlignment="Top" Width="120" SelectionChanged="dwarfList_SelectionChanged" />
+        <TextBox Height="207" Margin="138,138,8,0" Name="dwarfText" VerticalAlignment="Top" TextWrapping="Wrap" />
+        <ListBox Height="157" HorizontalAlignment="Left" Margin="12,351,0,0" Name="managerList" VerticalAlignment="Top" Width="120" SelectionChanged="managerList_SelectionChanged" />
+        <TextBox Height="186" Margin="138,351,8,0" Name="managerText" VerticalAlignment="Top" TextWrapping="Wrap" />
         <TextBox Height="184" HorizontalAlignment="Left" Margin="12,543,0,0" Name="outputText" VerticalAlignment="Top" Width="301" />
         <Label Content="turn" Height="28" HorizontalAlignment="Left" Margin="12,733,0,0" Name="turnLabel" VerticalAlignment="Top" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="56,733,0,0" Name="inputText" VerticalAlignment="Top" Width="120" />
         <Button Content="Step" Height="23" HorizontalAlignment="Left" Margin="182,733,0,0" Name="stepButton" VerticalAlignment="Top" Width="60" Click="stepButton_Click" />
-        <Button Content="Run" Height="23" HorizontalAlignment="Left" Margin="271,734,0,0" Name="runButton" VerticalAlignment="Top" Width="65" Click="runButton_Click" />
-        <Button Content="Run until:" Height="23" HorizontalAlignment="Left" Margin="360,734,0,0" Name="runUntilButton" VerticalAlignment="Top" Width="75" Click="runUntilButton_Click" />
+        <Button Content="Run" Height="23" HorizontalAlignment="Left" Margin="319,734,0,0" Name="runButton" VerticalAlignment="Top" Width="43" Click="runButton_Click" />
+        <Button Content="Run until:" Height="23" HorizontalAlignment="Left" Margin="372,734,0,0" Name="runUntilButton" VerticalAlignment="Top" Width="63" Click="runUntilButton_Click" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="441,733,0,0" Name="dwarfSelection" VerticalAlignment="Top" Width="120" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="567,733,0,0" Name="eventSelection" VerticalAlignment="Top" Width="120" />
         <Button Content="Exterminate" Height="23" HorizontalAlignment="Left" Margin="691,732,0,0" Name="unleashTheDaleks" VerticalAlignment="Top" Width="75" Click="unleashTheDaleks_Click" />
-        <TextBox Height="184" HorizontalAlignment="Left" Margin="319,543,0,0" Name="debugText" VerticalAlignment="Top" Width="447" />
+        <TextBox Height="184" Margin="319,543,8,0" Name="debugText" VerticalAlignment="Top"  />
+        <Button Content="Play/pause" Height="23" HorizontalAlignment="Left" Margin="248,734,0,0" Name="button1" VerticalAlignment="Top" Width="65" Click="button1_Click" />
+        <Button Content="Submit" Height="23" HorizontalAlignment="Right" Margin="8,514,8,0" Name="routineSubmit" VerticalAlignment="Top" Width="75" Click="routineSubmit_Click" />
+        <Button Content="Submit" Height="23" HorizontalAlignment="Right" Margin="8,322,8,0" Name="dwarfOrderSubmit" VerticalAlignment="Top" Width="75" Click="dwarfOrderSubmit_Click" />
+        <Button Content="Add dwarf" Height="23" HorizontalAlignment="Left" Margin="12,322,0,0" Name="dwarfAdd" VerticalAlignment="Top" Width="120" Click="dwarfAdd_Click" />
+        <Button Content="Add routine" Height="23" HorizontalAlignment="Left" Margin="12,514,0,0" Name="managerAdd" VerticalAlignment="Top" Width="120" Click="managerAdd_Click" />
     </Grid>
 </Window>
